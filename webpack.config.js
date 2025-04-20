@@ -20,7 +20,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/, // Apply this rule to .css files
+        test: /\.css$/i, // Apply this rule to .css files
         use: ['style-loader', 'css-loader'], // Inject CSS into the DOM
       },
     ],
