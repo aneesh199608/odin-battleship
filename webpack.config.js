@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js', // Output bundle file
+    publicPath: '/odin-battleship/',
     clean: true, // Clean the output directory before emit
   },
   module: {
@@ -30,7 +31,7 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: './dist', // Serve files from the 'dist' directory
+    static: './src', // Serve files from the 'dist' directory
     open: true, // Open the browser after server had been started
   },
   devtool: 'inline-source-map', // Enable source maps for easier debugging
