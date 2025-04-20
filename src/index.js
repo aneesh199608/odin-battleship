@@ -1,9 +1,10 @@
 import './styles.css';
-import GameController from './GameController';
-import { renderBoards } from './dom';
+import GameController from './GameController.js';
+import { renderBoards } from './dom.js';
 
 const game = new GameController();
-game.playerBoard.placeShip(game.playerBoard.ships[0] ?? { length: 1 }, 0, 0, 'horizontal');
-game.computerBoard.placeShip(game.computerBoard.ships[0] ?? { length: 1 }, 1, 1, 'horizontal');
 
-renderBoards(game); // call the DOM renderer
+game.playerBoard.placeShip({ length: 1, hit() {}, isSunk: () => false }, 0, 0, 'horizontal');
+game.computerBoard.placeShip({ length: 1, hit() {}, isSunk: () => false }, 1, 1, 'horizontal');
+
+renderBoards(game);

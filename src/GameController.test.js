@@ -1,5 +1,5 @@
-import GameController from './GameController';
-import Ship from './Ship';
+import GameController from './GameController.js';
+import Ship from './Ship.js';
 
 test('controller handles alternating turns and updates boards', () => {
   const game = new GameController();

@@ -1,5 +1,5 @@
-import Gameboard from './Gameboard';
-import Ship from './Ship';
+import Gameboard from './Gameboard.js';
+import Ship from './Ship.js';
 
 test('places a ship at a specific coordinate', () => {
   const board = new Gameboard();

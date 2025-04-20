@@ -1,5 +1,5 @@
-import Player from './Player';
-import Gameboard from './Gameboard';
+import Player from './Player.js';
+import Gameboard from './Gameboard.js';
 
 class GameController {
   constructor() {

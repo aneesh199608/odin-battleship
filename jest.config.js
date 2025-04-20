@@ -195,8 +195,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = {
-  moduleNameMapper: {
-    '\\.(css|less)$': 'identity-obj-proxy',
-  },
-};
+module.exports = config;

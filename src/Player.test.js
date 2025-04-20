@@ -1,6 +1,6 @@
-import Player from './Player';
-import Gameboard from './Gameboard';
-import Ship from './Ship';
+import Player from './Player.js';
+import Gameboard from './Gameboard.js';
+import Ship from './Ship.js';
 
 test('player can attack the enemy board', () => {
   const player1 = new Player();
