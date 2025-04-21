@@ -1,7 +1,8 @@
 // src/Ship.js
 class Ship {
-    constructor(length) {
+    constructor(length, name='Ship') {
       this.length = length;
+      this.name = name;
       this.hits = 0;
     }
   

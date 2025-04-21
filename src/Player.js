@@ -1,24 +1,24 @@
 // src/Player.js
+import Ship from './Ship.js';
 
 class Player {
-    constructor(isComputer = false) {
-      this.isComputer = isComputer;
-      this.availableMoves = [];
-  
-      if (isComputer) {
-        // Populate 100 coordinates: [0,0] to [9,9]
-        for (let y = 0; y < 10; y++) {
-          for (let x = 0; x < 10; x++) {
-            this.availableMoves.push([x, y]);
-          }
+  constructor(isComputer = false) {
+    this.isComputer = isComputer;
+    this.availableMoves = [];
+
+    if (isComputer) {
+      for (let y = 0; y < 10; y++) {
+        for (let x = 0; x < 10; x++) {
+          this.availableMoves.push([x, y]);
         }
       }
     }
-  
-    attack(board, x, y) {
-      board.receiveAttack(x, y);
-    }
-  
+  }
+
+  attack(board, x, y) {
+    board.receiveAttack(x, y);
+  }
+
   placeShipsRandomly(board) {
     const shipLengths = [5, 4, 3, 2, 1];
     const directions = ['horizontal', 'vertical'];
@@ -31,7 +31,7 @@ class Player {
         const direction = directions[Math.floor(Math.random() * 2)];
 
         if (board.canPlaceShip(length, x, y, direction)) {
-          const ship = { length, hit() {}, isSunk: () => false };
+          const ship = new Ship(length); // ✅ Create actual Ship instance
           board.placeShip(ship, x, y, direction);
           placed = true;
           console.log(`Placed ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
@@ -49,6 +49,6 @@ class Player {
     const [x, y] = this.availableMoves.splice(index, 1)[0];
     board.receiveAttack(x, y);
   }
-  }
-  
-  export default Player;
+}
+
+export default Player;
