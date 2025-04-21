@@ -3,7 +3,7 @@ import Gameboard from './Gameboard.js';
 import Ship from './Ship.js';
 
 class GameController {
-  constructor(renderBoards) {
+  constructor(uiHandlers = {}) {
     this.player = new Player();
     this.computer = new Player(true);
 
@@ -16,7 +16,12 @@ class GameController {
     this.computerBoard.placeShip(new Ship(4, 'Battleship'), 1, 0, 'horizontal');
 
     this.currentTurn = 'player';
-    this.renderBoards = renderBoards;
+    this.ui = {
+      renderBoards: uiHandlers.renderBoards || (() => {}),
+      showFeedback: uiHandlers.showFeedback || (() => {}),
+      showSunkMessage: uiHandlers.showSunkMessage || (() => {}),
+      showGameOver: uiHandlers.showGameOver || (() => {})
+    };
     this.gameOver = false;
   }
 
@@ -24,49 +29,43 @@ class GameController {
     if (this.gameOver || this.currentTurn !== 'player') return;
 
     const attackResult = this.player.attack(this.computerBoard, x, y);
-
     if (attackResult === false) {
-      const feedback = document.getElementById('feedback-indicator');
-      feedback.textContent = `You already attacked (${x}, ${y})!`;
+      this.ui.showFeedback(`You already attacked (${x}, ${y})!`);
       return 'invalid';
     }
 
     const target = this.computerBoard.grid[y][x];
     const isHit = target !== null;
 
-    if (target && target.ship && target.ship.isSunk()) {
-      this.showSunkMessage(target.ship);
+    if (target?.ship?.isSunk()) {
+      this.ui.showSunkMessage(target.ship, 'computer');
     }
 
     if (this.computerBoard.areAllShipsSunk()) {
       this.handleGameOver('Player');
-      this.renderBoards(this);
+      this.ui.renderBoards(this);
       return;
     }
 
-    this.renderBoards(this); // Render board after player's move
+    this.ui.renderBoards(this);
 
     this.currentTurn = 'computer';
     setTimeout(() => {
       if (this.gameOver) return;
 
-      const compAttackResult = this.computer.attackRandom(this.playerBoard);
-
-      // Get last attacked coordinate by computer
+      this.computer.attackRandom(this.playerBoard);
       const lastAttack = this.playerBoard.attackedCoordinates.at(-1);
-      const feedback = document.getElementById('feedback-indicator');
 
       if (lastAttack) {
         const [cx, cy] = lastAttack;
         const cell = this.playerBoard.grid[cy][cx];
-
-        if (cell && cell.ship) {
-          feedback.textContent = `Computer hit your ${cell.ship.name} at (${cx}, ${cy})! 💥`;
+        if (cell?.ship) {
+          this.ui.showFeedback(`Computer hit your ${cell.ship.name} at (${cx}, ${cy})! 💥`);
           if (cell.ship.isSunk()) {
-            this.showSunkMessage(cell.ship, 'player');
+            this.ui.showSunkMessage(cell.ship, 'player');
           }
         } else {
-          feedback.textContent = `Computer missed at (${cx}, ${cy}) ❌`;
+          this.ui.showFeedback(`Computer missed at (${cx}, ${cy}) ❌`);
         }
       }
 
@@ -76,25 +75,15 @@ class GameController {
         this.currentTurn = 'player';
       }
 
-      this.renderBoards(this);
+      this.ui.renderBoards(this);
     }, 300);
 
     return isHit ? 'hit' : 'miss';
   }
 
-  showSunkMessage(ship, owner = 'computer') {
-    const feedbackText = document.getElementById('feedback-indicator');
-    const message =
-      owner === 'player'
-        ? `The computer sunk your ${ship.name}! 💀`
-        : `You sunk the computer's ${ship.name}! 🚢🔥`;
-
-    feedbackText.textContent = message;
-  }
-
   handleGameOver(winner) {
     this.gameOver = true;
-    alert(`Game Over! ${winner} wins!`);
+    this.ui.showGameOver(winner);
   }
 }
 

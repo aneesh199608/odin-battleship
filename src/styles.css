@@ -1,4 +1,3 @@
-/* src/styles.css */
 .board {
     display: grid;
     grid-template-columns: repeat(10, 30px);
