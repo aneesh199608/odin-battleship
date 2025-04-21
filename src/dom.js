@@ -2,9 +2,13 @@
 export function renderBoards(game) {
     const playerBoardDiv = document.getElementById('player-board');
     const computerBoardDiv = document.getElementById('computer-board');
+    const turnText = document.getElementById('turn-indicator');
+    const feedbackText = document.getElementById('feedback-indicator');
   
     playerBoardDiv.innerHTML = '';
     computerBoardDiv.innerHTML = '';
+    turnText.textContent = game.currentTurn === 'player' ? "Player's turn" : "Computer's turn";
+    // feedbackText.textContent = '';
   
     for (let y = 0; y < 10; y++) {
       for (let x = 0; x < 10; x++) {
@@ -43,9 +47,19 @@ export function renderBoards(game) {
         }
   
         compCell.addEventListener('click', () => {
-          game.playTurn(x, y);
-          renderBoards(game); // re-render after each move
-        });
+          const result = game.playTurn(x, y);
+        
+          const feedbackText = document.getElementById('feedback-indicator');
+          if (result === 'hit') {
+            feedbackText.textContent = `You hit a ship at (${x}, ${y})! 🎯`;
+          } else if (result === 'miss') {
+            feedbackText.textContent = `You missed at (${x}, ${y}) ❌`;
+          } else if (result === 'invalid') {
+            feedbackText.textContent = `You already attacked (${x}, ${y})!`;
+          }
+        
+          renderBoards(game);
+        });        
   
         computerBoardDiv.appendChild(compCell);
       }
