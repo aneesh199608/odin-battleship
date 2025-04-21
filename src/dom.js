@@ -11,9 +11,24 @@ export function renderBoards(game) {
         // Player board
         const playerCell = document.createElement('div');
         playerCell.classList.add('cell');
+
         const playerHasShip = game.playerBoard.grid[y][x];
-        playerCell.textContent = playerHasShip ? '🚢' : '';
+        const wasAttacked = game.playerBoard.attackedCoordinates.some(
+          ([ax, ay]) => ax === x && ay === y
+        );
+
+        if (wasAttacked && playerHasShip) {
+          playerCell.textContent = '✅'; // Computer hit a ship
+        } else if (wasAttacked && !playerHasShip) {
+          playerCell.textContent = '❌'; // Computer missed
+        } else if (playerHasShip) {
+          playerCell.textContent = '🚢'; // Show ship only if not yet hit
+        } else {
+          playerCell.textContent = ''; // empty cell
+        }
+
         playerBoardDiv.appendChild(playerCell);
+
   
         // Computer board
         const compCell = document.createElement('div');

@@ -48,6 +48,7 @@ class Player {
     const index = Math.floor(Math.random() * this.availableMoves.length);
     const [x, y] = this.availableMoves.splice(index, 1)[0];
     board.receiveAttack(x, y);
+    console.log(`Computer attacks (${x}, ${y})`);
   }
 }
 

@@ -40,15 +40,17 @@ class Gameboard {
         const alreadyAttacked = this.attackedCoordinates.some(
             ([prevX, prevY]) => prevX === x && prevY === y
           );
-          if (alreadyAttacked) return;
+          if (alreadyAttacked) return false;
         
           this.attackedCoordinates.push([x, y]);
           
         const target = this.grid[y][x];
         if (target) {
           target.hit();
-        }
+        } else {
         this.missedAttacks.push([x, y]);
+        }
+        return true;
       }
 
       areAllShipsSunk() {
