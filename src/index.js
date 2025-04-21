@@ -21,3 +21,6 @@ const game = new GameController({
   },
 });
 
+game.ui.renderBoards(game);
+
+

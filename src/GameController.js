@@ -10,10 +10,9 @@ class GameController {
     this.playerBoard = new Gameboard();
     this.computerBoard = new Gameboard();
 
-    this.playerBoard.placeShip(new Ship(5, 'Carrier'), 0, 0, 'horizontal');
-    this.playerBoard.placeShip(new Ship(4, 'Battleship'), 1, 0, 'horizontal');
-    this.computerBoard.placeShip(new Ship(5, 'Carrier'), 0, 0, 'horizontal');
-    this.computerBoard.placeShip(new Ship(4, 'Battleship'), 1, 0, 'horizontal');
+    this.player.placeShipsRandomly(this.playerBoard, 'Player');
+    this.computer.placeShipsRandomly(this.computerBoard, 'Computer');
+
 
     this.currentTurn = 'player';
     this.ui = {
