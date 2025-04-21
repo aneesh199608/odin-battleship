@@ -19,7 +19,7 @@ class Player {
     board.receiveAttack(x, y);
   }
 
-  placeShipsRandomly(board) {
+  placeShipsRandomly(board, label = 'Player') {
     const shipLengths = [5, 4, 3, 2, 1];
     const directions = ['horizontal', 'vertical'];
 
@@ -34,7 +34,7 @@ class Player {
           const ship = new Ship(length); // ✅ Create actual Ship instance
           board.placeShip(ship, x, y, direction);
           placed = true;
-          console.log(`Placed ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
+          console.log(`${label}: Placed ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
         } else {
           console.log(`Failed to place ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
         }
