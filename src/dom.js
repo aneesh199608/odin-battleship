@@ -7,6 +7,10 @@ export function renderBoards(game) {
   
     playerBoardDiv.innerHTML = '';
     computerBoardDiv.innerHTML = '';
+
+    playerBoardDiv.className = 'board';
+    computerBoardDiv.className = 'board';
+
     turnText.textContent = game.currentTurn === 'player' ? "Player's turn" : "Computer's turn";
     // feedbackText.textContent = '';
   
