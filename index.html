@@ -4,12 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Battleship</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script defer src="bundle.js"></script></head>
 <body>
   <h1>Battleship</h1>
   <div id="game">
-    <div id="player-board" class="board"></div>
-    <div id="computer-board" class="board"></div>
+    <div id="console">
+      <p id="turn-indicator">Player's turn</p>
+      <p id="feedback-indicator">Get started! Click on the enemy grid to launch your first attack.</p>
+    </div>
+    <div class="boards-container">
+    <div id="player-board"></div>
+    <div id="computer-board"></div>
+    </div>
   </div>
 </body>
 </html>
