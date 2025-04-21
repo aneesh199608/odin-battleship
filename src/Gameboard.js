@@ -7,6 +7,21 @@ class Gameboard {
       this.attackedCoordinates = [];
     }
   
+    canPlaceShip(length, x, y, direction) {
+        if (direction === 'horizontal') {
+          if (x + length > 10) return false;
+          for (let i = 0; i < length; i++) {
+            if (this.grid[y][x + i] !== null) return false;
+          }
+        } else if (direction === 'vertical') {
+          if (y + length > 10) return false;
+          for (let i = 0; i < length; i++) {
+            if (this.grid[y + i][x] !== null) return false;
+          }
+        }
+        return true;
+      }
+
     placeShip(ship, x, y, direction) {
         if (direction === 'horizontal') {
           for (let i = 0; i < ship.length; i++) {
@@ -46,4 +61,3 @@ class Gameboard {
   }
   
   export default Gameboard;
-  

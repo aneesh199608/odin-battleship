@@ -22,9 +22,9 @@ export function renderBoards(game) {
         const hasShip = game.computerBoard.grid[y][x];
   
         if (isHit && hasShip) {
-          compCell.textContent = '🔥';
+          compCell.textContent = '✅';
         } else if (isHit) {
-          compCell.textContent = '💦';
+          compCell.textContent = '❌';
         }
   
         compCell.addEventListener('click', () => {
@@ -36,4 +36,3 @@ export function renderBoards(game) {
       }
     }
   }
-  

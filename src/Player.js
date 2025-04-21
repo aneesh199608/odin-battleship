@@ -19,14 +19,36 @@ class Player {
       board.receiveAttack(x, y);
     }
   
-    attackRandom(board) {
-      if (!this.availableMoves.length) return;
-  
-      const index = Math.floor(Math.random() * this.availableMoves.length);
-      const [x, y] = this.availableMoves.splice(index, 1)[0];
-      board.receiveAttack(x, y);
-    }
+  placeShipsRandomly(board) {
+    const shipLengths = [5, 4, 3, 2, 1];
+    const directions = ['horizontal', 'vertical'];
+
+    shipLengths.forEach(length => {
+      let placed = false;
+      while (!placed) {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
+        const direction = directions[Math.floor(Math.random() * 2)];
+
+        if (board.canPlaceShip(length, x, y, direction)) {
+          const ship = { length, hit() {}, isSunk: () => false };
+          board.placeShip(ship, x, y, direction);
+          placed = true;
+          console.log(`Placed ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
+        } else {
+          console.log(`Failed to place ship of length ${length} at (${x}, ${y}) with direction ${direction}`);
+        }
+      }
+    });
+  }
+
+  attackRandom(board) {
+    if (!this.availableMoves.length) return;
+
+    const index = Math.floor(Math.random() * this.availableMoves.length);
+    const [x, y] = this.availableMoves.splice(index, 1)[0];
+    board.receiveAttack(x, y);
+  }
   }
   
   export default Player;
-  
